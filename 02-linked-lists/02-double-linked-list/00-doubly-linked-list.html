@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <!--favicon -->
+       <link href="./favicon.png" rel="shortcut icon"/>
+      <title>DoublyLinkedList In JavaScript</title>
+      <style>
+          @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
+          
+          /*=============================================
+                 _reset.scss
+          ================================================*/
+         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+         /* Document
+   ========================================================================== */
+
+         /**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+         html {
+            line-height: 1.15;
+            /* 1 */
+            -webkit-text-size-adjust: 100%;
+            /* 2 */
+         }
+
+         /* Sections
+   ========================================================================== */
+
+         /**
+ * Remove the margin in all browsers.
+ */
+
+         body {
+            margin: 0;
+         }
+
+         /**
+ * Render the `main` element consistently in IE.
+ */
+
+         main {
+            display: block;
+         }
+
+         /**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+         h1 {
+            font-size: 2em;
+            margin: 0.67em 0;
+         }
+
+         /* Grouping content
+   ========================================================================== */
+
+         /**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+         hr {
+            box-sizing: content-box;
+            /* 1 */
+            height: 0;
+            /* 1 */
+            overflow: visible;
+            /* 2 */
+         }
+
+         /**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+         pre {
+            font-family: monospace, monospace;
+            /* 1 */
+            font-size: 1em;
+            /* 2 */
+         }
+
+         /* Text-level semantics
+   ========================================================================== */
+
+         /**
+ * Remove the gray background on active links in IE 10.
+ */
+
+         a {
+            background-color: transparent;
+         }
+
+         /**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+         abbr[title] {
+            border-bottom: none;
+            /* 1 */
+            text-decoration: underline;
+            /* 2 */
+            text-decoration: underline dotted;
+            /* 2 */
+         }
+
+         /**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+         b,
+         strong {
+            font-weight: bolder;
+         }
+
+         /**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+         code,
+         kbd,
+         samp {
+            font-family: monospace, monospace;
+            /* 1 */
+            font-size: 1em;
+            /* 2 */
+         }
+
+         /**
+ * Add the correct font size in all browsers.
+ */
+
+         small {
+            font-size: 80%;
+         }
+
+         /**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+         sub,
+         sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+         }
+
+         sub {
+            bottom: -0.25em;
+         }
+
+         sup {
+            top: -0.5em;
+         }
+
+         /* Embedded content
+   ========================================================================== */
+
+         /**
+ * Remove the border on images inside links in IE 10.
+ */
+
+         img {
+            border-style: none;
+         }
+
+         /* Forms
+   ========================================================================== */
+
+         /**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+         button,
+         input,
+         optgroup,
+         select,
+         textarea {
+            font-family: inherit;
+            /* 1 */
+            font-size: 100%;
+            /* 1 */
+            line-height: 1.15;
+            /* 1 */
+            margin: 0;
+            /* 2 */
+         }
+
+         /**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+         button,
+         input {
+            /* 1 */
+            overflow: visible;
+         }
+
+         /**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+         button,
+         select {
+            /* 1 */
+            text-transform: none;
+         }
+
+         /**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+
+         button,
+         [type="button"],
+         [type="reset"],
+         [type="submit"] {
+            -webkit-appearance: button;
+         }
+
+         /**
+ * Remove the inner border and padding in Firefox.
+ */
+
+         button::-moz-focus-inner,
+         [type="button"]::-moz-focus-inner,
+         [type="reset"]::-moz-focus-inner,
+         [type="submit"]::-moz-focus-inner {
+            border-style: none;
+            padding: 0;
+         }
+
+         /**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+         button:-moz-focusring,
+         [type="button"]:-moz-focusring,
+         [type="reset"]:-moz-focusring,
+         [type="submit"]:-moz-focusring {
+            outline: 1px dotted ButtonText;
+         }
+
+         /**
+ * Correct the padding in Firefox.
+ */
+
+         fieldset {
+            padding: 0.35em 0.75em 0.625em;
+         }
+
+         /**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+         legend {
+            box-sizing: border-box;
+            /* 1 */
+            color: inherit;
+            /* 2 */
+            display: table;
+            /* 1 */
+            max-width: 100%;
+            /* 1 */
+            padding: 0;
+            /* 3 */
+            white-space: normal;
+            /* 1 */
+         }
+
+         /**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+         progress {
+            vertical-align: baseline;
+         }
+
+         /**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+
+         textarea {
+            overflow: auto;
+         }
+
+         /**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+
+         [type="checkbox"],
+         [type="radio"] {
+            box-sizing: border-box;
+            /* 1 */
+            padding: 0;
+            /* 2 */
+         }
+
+         /**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+         [type="number"]::-webkit-inner-spin-button,
+         [type="number"]::-webkit-outer-spin-button {
+            height: auto;
+         }
+
+         /**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+         [type="search"] {
+            -webkit-appearance: textfield;
+            /* 1 */
+            outline-offset: -2px;
+            /* 2 */
+         }
+
+         /**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+
+         [type="search"]::-webkit-search-decoration {
+            -webkit-appearance: none;
+         }
+
+         /**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+         ::-webkit-file-upload-button {
+            -webkit-appearance: button;
+            /* 1 */
+            font: inherit;
+            /* 2 */
+         }
+
+         /* Interactive
+   ========================================================================== */
+
+         /*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+
+         details {
+            display: block;
+         }
+
+         /*
+ * Add the correct display in all browsers.
+ */
+
+         summary {
+            display: list-item;
+         }
+
+         /* Misc
+   ========================================================================== */
+
+         /**
+ * Add the correct display in IE 10+.
+ */
+
+         template {
+            display: none;
+         }
+
+         /**
+ * Add the correct display in IE 10.
+ */
+
+         [hidden] {
+            display: none;
+         }
+
+
+         /* =========================================
+              Website Resets
+=        =========================================== */
+         *,
+         *::after,
+         *::before {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+         }
+
+         *::-moz-focus-inner {
+            border: 0;
+         }
+
+         *:focus {
+            outline: none;
+         }
+
+         /*=============================================
+               scrollbar styles
+         ================================================*/
+         /* width */
+         ::-webkit-scrollbar {
+            width: 3px;
+
+         }
+
+         /* track */
+         ::-webkit-scrollbar-track {
+            margin-left: 4px;
+            box-shadow: inset 0 0 5px #bfbfbf;
+            border-radius: 3px;
+
+         }
+
+         /* handle */
+         ::-webkit-scrollbar-thumb {
+            background: #d9d9d9;
+            border-radius: 3px;
+         }
+
+         /* handle on hover */
+         ::-webkit-scrollbar-thumb:hover {
+            background: #616161;
+         }
+          
+          :root {
+
+            /*************************** primary colors ***************************/
+            --clr-blue-01-000: hsl(210, 51%, 94%);
+            --clr-blue-01-100: hsl(210, 51%, 89%);
+            --clr-blue-01-200: hsl(210, 51%, 78%);
+            --clr-blue-01-300: hsl(210, 51%, 67%);
+            --clr-blue-01-400: hsl(210, 51%, 55%);
+            --clr-blue-01-500: hsl(210, 64%, 44%);
+            --clr-blue-01-600: hsl(210, 64%, 39%);
+            --clr-blue-01-700: hsl(210, 64%, 34%);
+            --clr-blue-01-800: hsl(210, 64%, 28%);
+            --clr-blue-01-900: hsl(210, 64%, 23%);
+
+
+            /*************************** augmented colors ***************************/
+            --clr-augmented-000: hsl(210, 12%, 98%);
+            --clr-augmented-100: hsl(210, 12%, 88%);
+            --clr-augmented-200: hsl(210, 12%, 78%);
+            --clr-augmented-300: hsl(210, 15%, 68%);
+            --clr-augmented-400: hsl(210, 15%, 58%);
+            --clr-augmented-500: hsl(210, 15%, 48%);
+            --clr-augmented-600: hsl(210, 15%, 38%);
+            --clr-augmented-700: hsl(210, 20%, 28%);
+            --clr-augmented-800: hsl(210, 25%, 18%);
+            --clr-augmented-900: hsl(210, 30%, 10%);
+
+            /******************************** fonts ********************************/
+            --ff-primary-font: 'Lora', serif;
+            --ff-secondary-font: 'Montserrat', sans-serif;
+            --ff-monospace-font: 'Noto Sans Mono', monospace;
+
+            /************************* fluid heading text *************************/
+            --fht-fluid-heading-text-h6: clamp(1rem, 0.25vi + 0.95rem, 1.25rem);
+            --fht-fluid-heading-text-h5: clamp(1.25rem, 0.31vi + 1.19rem, 1.56rem);
+            --fht-fluid-heading-text-h4: clamp(1.56rem, 0.39vi + 1.48rem, 1.95rem);
+            --fht-fluid-heading-text-h3: clamp(1.95rem, 0.49vi + 1.86rem, 2.44rem);
+            --fht-fluid-heading-text-h2: clamp(2.44rem, 0.61vi + 2.32rem, 3.05rem);
+            --fht-fluid-heading-text-h1: clamp(3.05rem, 0.76vi + 2.9rem, 3.81rem);
+
+            /*************************** fluid body text ***************************/
+            --fbt-fluid-body-text-p6: clamp(0.64rem, 0.16vi + 0.61rem, 0.8rem);
+            --fbt-fluid-body-text-p5: clamp(0.8rem, 0.2vi + 0.76rem, 1rem);
+            --fbt-fluid-body-text-p4: clamp(1rem, 0.25vi + 0.95rem, 1.25rem);
+            --fbt-fluid-body-text-p3: clamp(1.25rem, 0.31vi + 1.19rem, 1.56rem);
+            --fbt-fluid-body-text-p2: clamp(1.56rem, 0.39vi + 1.48rem, 1.95rem);
+            --fbt-fluid-body-text-p1: clamp(1.95rem, 0.49vi + 1.86rem, 2.44rem);
+
+            /*************************** border-radius ***************************/
+            --br-border-radius-000: 1px;
+            --br-border-radius-100: 2px;
+            --br-border-radius-200: 3px;
+            --br-border-radius-300: 5px;
+            --br-border-radius-400: 8px;
+            --br-border-radius-500: 13px;
+            --br-border-radius-600: 21px;
+            --br-border-radius-700: 34px;
+            --br-border-radius-800: 55px;
+            --br-border-radius-900: 50%;
+
+         }
+
+         html {
+            font-size: 100%;
+            scroll-behavior: smooth;
+
+
+         }
+
+         /*16px*/
+
+         body {
+            position: relative;
+            z-index: 1;
+            overflow-x: hidden;
+            font-family: var(--ff-secondary-font),sans-serif;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+            color: var(--clr-augmented-900);
+            background-color: var(--clr-augmented-100);
+
+         }
+
+         p {
+            margin-bottom: 1rem;
+            text-rendering: optimizeLegibility;
+         }
+
+         h1,
+         h2,
+         h3,
+         h4,
+         h5 {
+            font-family: var(--ff-primary-font),serif;
+            font-weight: 400;
+            line-height: 1.3;
+            text-rendering: optimizeLegibility;
+         }
+
+         h1 {
+            margin-top: 0;
+            font-size: 3.052rem;
+         }
+
+         h2 {
+            font-size: 2.441rem;
+         }
+
+         h3 {
+            font-size: 1.953rem;
+         }
+
+         h4 {
+            font-size: 1.563rem;
+         }
+
+         h5 {
+            font-size: 1.25rem;
+         }
+
+
+         small,
+         .text_small {
+            font-size: 0.8rem;
+            text-rendering: optimizeLegibility;
+         }
+
+         .heading-primary {
+            margin-top: 0;
+            padding-left: .5em;
+            font-size: 3.052rem;
+            color: var(--clr-blue-01-500);
+            
+         }
+
+         .heading-secondary {
+            font-size: 2.441rem;
+         }
+
+         .heading-tertiary {
+            font-size: 1.953rem;
+         }
+
+         .special-heading {
+            font-family: var(--ff-secondary-font),sans-serif;
+            padding-left: 1.25em;
+            color: var(--clr-blue-01-800);
+         }
+
+         .paragraph {
+            /*font-size: 1.6rem;*/
+            font-size: var(--fbt-fluid-body-text-p5);
+
+            &:not(:last-child) {
+               margin-bottom: 3em;
+            }
+         }
+
+         .vertical-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+         }
+
+         ul {
+            list-style: none;
+
+         }
+
+         a {
+            text-decoration: none !important;
+         }
+
+         img {
+            width: 100%;
+            height: auto;
+         }
+
+         /* Chrome, Safari, Edge, Opera */
+         input::-webkit-outer-spin-button,
+         input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            font-family: var(--ff-monospace-font), monospace;
+         }
+
+         /* Firefox */
+         input[type=number] {
+            -moz-appearance: textfield;
+            font-family: var(--ff-monospace-font), monospace;
+         }
+
+
+         .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+         .grid-center {
+            display: grid;
+            place-items: center;
+         }
+
+         .grid-container {
+            margin: 0 auto;
+            width: 90%;
+            display: grid;
+            row-gap: 3rem;
+            column-gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         }
+
+         .grid-container-12 {
+            margin: 0 auto;
+            width: 90%;
+            display: grid;
+            row-gap: 3rem;
+            column-gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+         }
+
+         .grid-column-1 {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            column-gap: 2rem;
+         }
+
+         .grid-column-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 2rem;
+         }
+
+         .grid-column-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            column-gap: 2rem;
+         }
+
+         .grid-column-4 {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            column-gap: 2rem;
+         }
+
+         .utils-container-fluid {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 16px;
+            padding-right: 16px;
+         }
+
+         .utils-container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 16px;
+            padding-right: 16px;
+         }
+
+         @media (min-width: 576px) {
+            .utils-container {
+               max-width: 544px;
+            }
+         }
+
+         @media (min-width: 768px) {
+            .utils-container {
+               max-width: 720px;
+            }
+         }
+
+         @media (min-width: 992px) {
+            .utils-container {
+               max-width: 960px;
+            }
+         }
+
+         @media (min-width: 1200px) {
+            .utils-container {
+               max-width: 1144px;
+            }
+         }
+
+         @media (min-width: 1400px) {
+            .utils-container {
+               max-width: 1320px;
+            }
+         }
+         .main {
+            position: relative;
+         }
+         .section {
+            margin: 20%;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            
+         }
+         
+
+         .main-section {
+            min-height: 20%;
+            padding-top: 2em;
+            border-radius: var(--br-border-radius-100);
+            border-left: solid 8px;
+            border-color: var(--clr-augmented-400);
+            
+         }
+      </style>
+   </head>
+
+   <body>
+      <main class="main">
+         <section class="utils-container section">
+            <div class="main-section">
+               <h1 class="heading-primary">DoublyLinkedList In JavaScript</h1>
+               <h5 class="special-heading">Press F12 on the keyboard to view JavaScript in the console view</h5>
+            </div>
+         </section>
+      </main>
+      <script>
+         /*===========================================================================
+            a brief description - Implementation of DoublyLinkedList in JavaScript
+         ==============================================================================*/
+         class Node {
+             constructor(value){
+                 this.value = value;
+                 this.next = null;
+                 this.prev = null;
+             }
+         }//end of Node Class
+         
+         class DoublyLinkedList {
+             constructor(value) {
+                 const newNode = new Node(value);
+                 this.head = newNode;
+                 this.tail = newNode;
+                 this.length = 1;
+                 
+             }//end of DoublyLinkedList Constructor
+             
+             printList() {
+                 let temp = this.head;
+                 while (temp !== null) {
+                     console.log(temp.value);
+                     temp = temp.next;
+                 }
+             }//end of printList Function
+             
+             getHead() {
+                 if (this.head === null) {
+                     console.log("Head: null");
+                 } else {
+                     console.log("Head: " + this.head.value);
+                 }
+             }//end of getHead Function
+             
+             getTail() {
+                 if (this.tail === null) {
+                     console.log("Tail: null");
+                 } else {
+                     console.log("Tail: " + this.tail.value);
+                 }
+             }//end of getTail Function
+             
+             getLength() {
+                 console.log("Length: " + this.length);
+             }//end of getLength Function
+             
+             push(value) {
+                 const newNode = new Node(value);
+                 if (this.length === 0) {
+                     this.head = newNode;
+                     this.tail = newNode;
+                     
+                 } else {
+                     this.tail.next = newNode;
+                     newNode.prev = this.tail;
+                     this.tail = newNode;
+                 }
+                 this.length++;
+                 return this;
+                 
+             }//end of push Function
+             
+             pop() {
+                 if (this.length === 0) {
+                     return undefined;
+                 }
+                 
+                 let temp = this.tail;
+                 if (this.length === 1) {
+                     this.head = null;
+                     this.tail = null;
+                 
+                 } else {
+                     this.tail = this.tail.prev;
+                     this.tail.next = null;
+                     temp.prev = null;
+                 
+                 }
+                 this.length--;
+                 return temp;
+                 
+             }//end of pop Function
+             
+             unshift(value) {
+                 const newNode = new Node(value);
+                 
+                 if (this.length === 0) {
+                     this.head = newNode;
+                     this.tail = newNode;
+                     
+                 } else {
+                     newNode.next = this.head;
+                     this.head.prev = newNode;
+                     this.head = newNode;
+                 }
+                 this.length++;
+                 return this;
+                 
+             }//end of unshift Function
+             
+             shift() {
+                 if (this.length === 0) {
+                     return undefined;
+                 }
+                 
+                 let temp = this.head;
+                 if (this.length === 1) {
+                     this.head = null;
+                     this.tail = null;
+                     
+                 } else {
+                     this.head = this.head.next;
+                     this.head.prev = null;
+                     temp.next = null;
+                     
+                 }
+                 this.length--;
+                 return temp;
+                 
+             }//end of shift Function
+             
+             get(index) {
+                 if ((index < 0) || (index >= this.length)) {
+                     return undefined;
+                 }
+                 let temp;
+                 if (index < (this.length / 2)) {
+                     temp = this.head;
+                     for (let i = 0; i < index; i++) {
+                         temp = temp.next;
+                     }
+                 } else {
+                     temp = this.tail;
+                     for (let i = (this.length - 1); i > index; i--) {
+                         temp = temp.prev;
+                     }
+                 }
+                 return temp;
+                 
+             }//end of get Function
+             
+             set(index, value) {
+                 let temp = this.get(index);
+                 if (temp) {
+                     temp.value = value;
+                     return true;
+                 }
+                 return false;
+                 
+             }//end of set Function
+             
+             insert(index, value) {
+                 if ((index < 0) || (index > this.length)) {
+                     return false;
+                     
+                 }
+                 if (index === this.length) {
+                     return this.push(value);
+                     
+                 }
+                 if (index === 0) {
+                     return this.unshift(value);
+                     
+                 }
+                 const newNode = new Node(value);
+                 const beforeNode = this.get(index - 1);
+                 const afterNode = beforeNode.next;
+                 
+                 beforeNode.next = newNode;
+                 newNode.prev = beforeNode;
+                 newNode.next = afterNode;
+                 afterNode.prev = newNode;
+                 this.length++;
+                 return true;
+                 
+             }//end of insert Function
+             
+             remove(index) {
+                 if ((index < 0) || (index >= this.length)) {
+                     return undefined;
+                     
+                 }
+                 if (index === 0) {
+                     return this.shift();
+                     
+                 }
+                 if (index === this.length -1) {
+                     return this.pop();
+                     
+                 }
+                 const tempNode = this.get(index);
+                 tempNode.prev.next = tempNode.next;
+                 tempNode.next.prev = tempNode.prev;
+                 tempNode.next = null;
+                 tempNode.prev = null;
+                 this.length--;
+                 return tempNode;
+                 
+             }//end of remove Function
+             
+             swapFirstLast() {
+                 if (this.length < 2) {
+                     return;
+                 }
+                 let headTemp = this.head;
+                 let tailTemp = this.tail;
+                 
+                 let tempValue = headTemp.value;
+                 headTemp.value = tailTemp.value;
+                 tailTemp.value = tempValue;
+                 
+             }//end of swapFirstLast Function
+             
+             swapNextAndPrev(node) {
+                 let prev = node.prev;
+                 node.prev = node.next;
+                 node.next = prev;
+                 
+             }//end of swapNextAndPrev Function
+             
+             reverse() {
+                 if (this.length <= 1) {
+                     return;
+                 }
+                 let prev = null;
+                 let current = this.head;
+                 
+                 //traverse the doublyLinkedList
+                 while (current != null) {
+                     //swap next and prev pointers for current node
+                     this.swapNextAndPrev(current);
+                     
+                     //update the previous node before moving to the next node
+                     prev = current;
+                     
+                     //since next and prev pointers were swapped, move to the next node in DoublyLinkedList
+                     current = current.prev;
+                 }
+                 //update the head pointer to the last node
+                 current = this.head;
+                 this.head = prev;
+                 this.tail = current;
+                 
+             }//end of reverse Function
+             
+             isPalindrome() {
+                 if (this.head === null) {
+                     return true;
+                 }
+                 
+                 let left = this.head, right = left;
+                 
+                 //traverse right to the end of DoublyLinkedList
+                 while (right.next !== null) {
+                     right = right.next;
+                 }
+                 
+                 //traverse left towards right and right towards the left
+                 while (left !== right) {
+                     //check whether their values are the same
+                     if (left.value !== right.value) {
+                         return false;
+                     }
+                     //advance left towards the right and right towards the left
+                     left = left.next;
+                     right = right.prev;
+                 }
+                 return true;
+                 
+             }//end of isPalindrome Function
+             
+             swapPairs() {
+                 if (this.head === null || this.length <= 1) {
+                     return;
+                 }
+                 
+                 let current = this.head;
+                 
+                 //traverse nodes current and its adjacent
+                 while (current !== null && current.next !== null) {
+                     //swap the values of current and its adjacent
+                     let tempValue = current.value;
+                     current.value = current.next.value;
+                     current.next.value = tempValue;
+                     
+                     //advance to the beginning of the next set of nodes
+                     current = current.next.next;
+                 }
+             }//end of swapPairs Function
+             
+             
+         }//end of DoublyLinkedList Class
+         
+         let doublyLinkedList = new DoublyLinkedList(1);
+         doublyLinkedList.push(4);
+         doublyLinkedList.push(9);
+         doublyLinkedList.push(16);
+         doublyLinkedList.push(25);
+         doublyLinkedList.push(36);
+         doublyLinkedList.push(49);
+         doublyLinkedList.push(64);
+         doublyLinkedList.push(81);
+         doublyLinkedList.printList();
+         console.log(doublyLinkedList);
+         console.log(doublyLinkedList.get(7));
+         
+         console.log("DoublyLinkedList before set():");
+         doublyLinkedList.printList();
+         doublyLinkedList.set(2, 99);
+         console.log("DoublyLinkedList after set():");
+         doublyLinkedList.printList();
+         console.log(doublyLinkedList.set(2, 9));
+         doublyLinkedList.printList();
+         console.log(doublyLinkedList.insert(5, 30));
+         doublyLinkedList.printList();
+         console.log(doublyLinkedList.insert(20, 25));
+         console.log(doublyLinkedList.remove(5).value);
+         
+         
+
+         console.log('before swapFirstLast function');
+         doublyLinkedList.printList();
+         doublyLinkedList.swapFirstLast();
+         console.log('after swapFirstLast function');
+         doublyLinkedList.printList();
+         console.clear();
+         doublyLinkedList.swapFirstLast();
+         doublyLinkedList.printList();
+         console.log('after reverse function');
+         doublyLinkedList.reverse();
+         doublyLinkedList.printList();
+         
+         let doublyLinkedList2 = new DoublyLinkedList(6);
+         doublyLinkedList2.push(8);
+         doublyLinkedList2.push(5);
+         doublyLinkedList2.push(8);
+         doublyLinkedList2.push(6);
+         doublyLinkedList2.printList();
+         let result2 = doublyLinkedList2.isPalindrome();
+         console.log(`Is doublyLinkedList2 a palindrome? ${result2}`);
+         console.log('before swapPairs function');
+         doublyLinkedList2.printList();
+         doublyLinkedList2.swapPairs();
+         console.log('after swapPairs function')
+         doublyLinkedList2.printList();
+         
+         
+      </script>
+   </body>
+</html>
